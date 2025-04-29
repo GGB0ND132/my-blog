@@ -1,0 +1,11 @@
+# 忽略依赖和构建产物
+node_modules
+dist
+.env
+.DS_Store
+.vscode
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
