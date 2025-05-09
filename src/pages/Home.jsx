@@ -1,27 +1,23 @@
+// src/page/Home.jsx
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, Typography } from '@mui/material';
-
-const posts = [
-  { id: 1, title: '第一篇博客', summary: '这是第一篇博客摘要' },
-  { id: 2, title: '第二篇博客', summary: '这是第二篇博客摘要' }
-];
+import { loadPosts } from '../utils/loadPosts';
 
 function Home() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    loadPosts().then(setPosts);
+  }, []);
+
   return (
-    <div className="p-8 grid gap-6">
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">博客文章</h1>
       {posts.map(post => (
-        <Card key={post.id} className="hover:shadow-lg transition">
-          <CardContent>
-            <Typography variant="h5" component="div">
-              <Link to={`/post/${post.id}`} className="text-blue-500 hover:underline">
-                {post.title}
-              </Link>
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {post.summary}
-            </Typography>
-          </CardContent>
-        </Card>
+        <Link key={post.slug} to={`/post/${post.slug}`} className="block mb-4 p-4 border rounded hover:bg-gray-100">
+          <h2 className="text-xl font-semibold">{post.title}</h2>
+          <p className="text-gray-600">{post.date}</p>
+        </Link>
       ))}
     </div>
   );
